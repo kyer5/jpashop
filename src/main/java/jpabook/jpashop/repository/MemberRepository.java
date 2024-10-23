@@ -3,15 +3,23 @@ package jpabook.jpashop.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jpabook.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class MemberRepository {
 
-    @PersistenceContext
+    // @PersistenceContext -> Spring Data JPA에서는 @Autowired로 변경 가능
+    @Autowired
     private EntityManager em; // spring이 entitymanager를 만들어서 주입해줌
+
+    /*public MemberRepository(EntityManager em) {
+        this.em = em;
+    }*/
 
     public void save(Member member) {
         em.persist(member); // jpa가 저장함
