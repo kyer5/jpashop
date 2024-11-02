@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -42,5 +44,14 @@ public class MemberController {
 
         memberService.join(member);
         return "redirect:/";
+    }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        // API를 만들 때에는 이유를 불문하고 절대 Entity를 외부로 반환해선 안 된다 !
+        // ↳ ex) Member Entity에 userpassword 필드를 추가했을 때, 1. 패스워드가 그대로 노출되는 문제 2. API 스펙이 변해버리는 문제 (불완전한  API 스펙이 됨)
+        List<Member> members = memberService.findMembers(); // 실무에서는 Entity 보단 DTO로 변환해서 뿌리는 것이 좋음
+        model.addAttribute("members", members);
+        return "members/memberList";
     }
 }
