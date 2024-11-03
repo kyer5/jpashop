@@ -16,7 +16,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional // 저장하는 부분이기 때문에 @Transactional 따로 선언 필요
-    public void saveRepository(Item item) {
+    public void saveItem(Item item) {
         itemRepository.save(item);
     }
 
